@@ -188,6 +188,15 @@ double Model::CalcDifference()
 	return sqrt(res / p.N);
 }
 
+double Model::Cos(double x, double y, double z, double A, double B, double C)
+{
+	double vmodule = sqrt(x * x + y * y + z * z);
+	double nmodule = sqrt(A * A + B * B + C * C);
+	double first = x * A + y * B + z * C;
+	double second = vmodule * nmodule;
+	return first / second;
+}
+
 void Model::Create(ModelParams& p)
 {
 	this->p = p;
@@ -248,15 +257,13 @@ void Model::MakePowerline(double x, double y)
 
 	if ((x < 0) || (y < 0) || (x >= p.N) || (y >= p.N))return;
 
-	int cap = 10 * p.N;
+	int cap = p.N;
 	int ctr = 0;
 	double step = 0.3;
 	
 	int cxprev = -1;
 	int cyprev = -1;
 
-	double xprev = -1;
-	double yprev = -1;
 
 	vector<pair<double, double>>powerline;
 
@@ -272,7 +279,6 @@ void Model::MakePowerline(double x, double y)
 
 
 		if ((cx < 0) || (cy < 0) || (cx >= p.N) || (cy >= p.N))break;
-		//if ((fabs(x - xprev) < step / 4.) && (fabs(y - yprev) < step / 4.))break;
 
 
 		double x1(cx), x2(0), x3(cx + 1),
@@ -294,15 +300,19 @@ void Model::MakePowerline(double x, double y)
 
 		double A = (y2 - y1) * (z3 - z1) - (y3 - y1) * (z2 - z1);
 		double B = (x2 - x1) * (z3 - z1) - (x3 - x1) * (z2 - z1);
-		double gradabs = sqrt(A * A + B * B);
-		A /= gradabs;
-		B /= gradabs;
+		double C = (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
 
-		if ((x > p.N / 2.) && (y > p.N / 2.))
+		//double mcos = Cos(x2 - x1, y2 - y1, z2 - z1, A, B, C);
+		if (C > 0)
 		{
 			A = -A;
 			B = -B;
 		}
+
+		double gradabs = sqrt(A * A + B * B);
+		A /= gradabs;
+		B /= gradabs;
+
 		x -= step * A;
 		y -= step * B;
 
@@ -322,4 +332,22 @@ vector<vector<pair<double, double>>> Model::GetPowerlines()
 void Model::ClearPowerlines()
 {
 	powerlines.clear();
+}
+
+void Model::MakeMultiplePowerlines(int num)
+{
+	ClearPowerlines();
+	if (num < 3)return;
+
+	double step = p.N / (num - 1.);
+
+	for (int i = 0; i < num; i++)
+	{
+		for (int j = 0; j < num; j++)
+		{
+			double x = j * step;
+			double y = i * step;
+			MakePowerline(x, y);
+		}
+	}
 }

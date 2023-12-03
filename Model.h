@@ -69,6 +69,7 @@ protected:
 
 	double CalcDifference();
 	
+	double Cos(double x, double y, double z, double A, double B, double C);
 public:
 	void Create(ModelParams&p);
 	ModelParams GetParams();
@@ -77,4 +78,5 @@ public:
 	void MakePowerline(double x, double y);
 	vector<vector<pair<double, double>>>GetPowerlines();
 	void ClearPowerlines();
+	void MakeMultiplePowerlines(int num);
 };

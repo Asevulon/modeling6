@@ -39,4 +39,5 @@ public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	ParamsDialog pdlg;
 	afx_msg void OnBnClickedButtonClear();
+	CSliderCtrl PLSlider;
 };

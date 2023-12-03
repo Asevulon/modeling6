@@ -12,6 +12,8 @@
 #define IDC_EDIT3                       1003
 #define IDC_EDIT4                       1004
 #define IDC_EDIT5                       1005
+#define IDC_LINES_SLIDER2               1005
+#define IDC_POWERLINES_SLIDER           1005
 #define IDC_EDIT6                       1006
 #define IDC_EDIT7                       1007
 #define IDC_EDIT8                       1008
@@ -20,7 +22,6 @@
 #define IDC_EDIT11                      1011
 #define IDC_COMBO1                      1012
 #define IDC_EDIT13                      1013
-#define IDC_BUTTON1                     1013
 #define IDC_BUTTON_CLEAR                1013
 #define IDC_EDIT14                      1014
 

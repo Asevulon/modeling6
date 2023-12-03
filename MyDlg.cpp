@@ -28,6 +28,7 @@ void MyDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_MODEL_PICTURE, drw);
 	DDX_Control(pDX, IDC_LINES_SLIDER, LinesSlider);
+	DDX_Control(pDX, IDC_POWERLINES_SLIDER, PLSlider);
 }
 
 BEGIN_MESSAGE_MAP(MyDlg, CDialogEx)
@@ -55,6 +56,10 @@ BOOL MyDlg::OnInitDialog()
 	LinesSlider.SetRange(3, 25);
 	LinesSlider.SetPos(6);
 	drw.SetLinesNum(LinesSlider.GetPos());
+
+	PLSlider.SetRange(2, 75);
+	PLSlider.SetPos(2);
+
 	drw.parent = this;
 	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
 }
@@ -124,6 +129,8 @@ void MyDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
 	drw.SetLinesNum(LinesSlider.GetPos());
+	m.MakeMultiplePowerlines(PLSlider.GetPos());
+	drw.SetPowerlines(m.GetPowerlines());
 	drw.Invalidate();
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
