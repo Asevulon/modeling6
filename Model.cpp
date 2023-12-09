@@ -283,19 +283,19 @@ void Model::MakePowerline(double x, double y)
 
 		double x1(cx), x2(0), x3(cx + 1),
 			y1(cy), y2(0), y3(cy + 1),
-			z1(data[cx][cy].fi), z2(0), z3(data[cx + 1][cy + 1].fi);
+			z1(data[cy][cx].fi), z2(0), z3(data[cy + 1][cx + 1].fi);
 		
-		if (y > x)
+		if (y - cy> x - cx)
 		{
 			x2 = cx;
 			y2 = cy + 1;
-			z2 = data[cx][cy + 1].fi;
+			z2 = data[cy + 1][cx].fi;
 		}
 		else
 		{
 			x2 = cx + 1;
 			y2 = cy;
-			z2 = data[cx + 1][cy].fi;
+			z2 = data[cy][cx + 1].fi;
 		}
 
 		double A = (y2 - y1) * (z3 - z1) - (y3 - y1) * (z2 - z1);
